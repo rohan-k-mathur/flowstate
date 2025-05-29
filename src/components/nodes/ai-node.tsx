@@ -35,7 +35,7 @@ interface AINodeProps {
       });
 
       //const textResponse = await response.text(); // first get raw text for debug
-      //console.log("Raw Response from Backend:", textResponse);
+      //console.debug('Raw Response from Backend:', textResponse);
 
       if (!response.ok) {
         throw new Error(`API error: ${response.status}`);
@@ -43,7 +43,7 @@ interface AINodeProps {
       }
       
       const jsonResponse = await response.json();
-      console.log("Raw Response from Backend:", jsonResponse);
+      console.debug('Raw Response from Backend:', jsonResponse);
 
       if (!jsonResponse.nodes || !jsonResponse.edges) {
         console.error("Malformed JSON structure:", jsonResponse);
@@ -78,9 +78,9 @@ interface AINodeProps {
 
     //   setNodes(json.nodes);
     //   setEdges(json.edges);
-// ADD THESE LINES:
-console.log("Nodes after setNodes:", formattedNodes);
-      console.log("Edges after setEdges:", formattedEdges);
+// Debug output for newly created nodes and edges
+      console.debug('Nodes after setNodes:', formattedNodes);
+      console.debug('Edges after setEdges:', formattedEdges);
     } catch (err) {
       console.error('Failed to generate AI workflow:', err);
     } finally {

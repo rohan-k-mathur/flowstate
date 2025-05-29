@@ -131,12 +131,12 @@ export const createAppStore = (initialState: AppState = defaultState) => {
       },
 
       setNodes: (nodes) => {
-        console.log('🚀 Zustand nodes updated:', nodes);
+        console.debug('Zustand nodes updated:', nodes);
         set({ nodes });
       },
       
       setEdges: (edges) => {
-        console.log('🚀 Zustand edges updated:', edges);
+        console.debug('Zustand edges updated:', edges);
         set({ edges });
       },
       setSelectedNode: (node) => set({ selectedNode: node }),

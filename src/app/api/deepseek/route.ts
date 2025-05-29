@@ -90,7 +90,7 @@ Provide ONLY the JSON response without markdown or code fences.
   
     const data = await response.json();
   
-    console.log("DeepSeek Raw API Response:", data);
+    console.debug('DeepSeek Raw API Response:', data);
   
     // Extract and clean markdown-wrapped JSON
     let jsonResponse;
@@ -112,7 +112,7 @@ Provide ONLY the JSON response without markdown or code fences.
       });
     }
   
-    console.log("Parsed JSON Response:", jsonResponse);
+    console.debug('Parsed JSON Response:', jsonResponse);
   
     return new Response(JSON.stringify(jsonResponse), {
       status: 200,

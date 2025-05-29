@@ -10,7 +10,7 @@ import { AppEdge } from '@/components/edges';
 export function useWorkflowRunner() {
   const [logMessages, setLogMessages] = useState<string[]>([]);
   useEffect(() => {
-    console.log("Workflow Logs:", logMessages);
+    console.debug('Workflow Logs:', logMessages);
   }, [logMessages]);
   const isRunning = useRef(false);
 
