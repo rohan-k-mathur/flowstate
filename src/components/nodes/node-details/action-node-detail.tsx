@@ -9,10 +9,23 @@ import type { NodeDetailProps, Action } from './types';
 export const ActionNodeDetail = ({ node }: NodeDetailProps) => {
   const setNodeData = useAppStore((state) => state.setNodeData);
   const { apps } = useApps();
-  const [selectedApp, setSelectedApp] = useState<string | null>(null);
+  const [selectedApp, setSelectedApp] = useState<string | null>(
+    node.data.appKey ?? null,
+  );
   const { actions } = useActions(selectedApp ?? undefined);
+  const [selectedAction, setSelectedAction] = useState<Action | null>(
+    node.data.actionType
+      ? { id: node.data.actionType, title: node.data.title ?? '' }
+      : null,
+  );
+
+  const handleAppSelect = (appKey: string) => {
+    setSelectedApp(appKey);
+    setNodeData(node.id, { appKey });
+  };
 
   const handleActionSelect = (action: Action) => {
+    setSelectedAction(action);
     setNodeData(node.id, {
       appKey: selectedApp ?? undefined,
       actionType: action.id,
@@ -33,7 +46,7 @@ export const ActionNodeDetail = ({ node }: NodeDetailProps) => {
             <button
               key={app.key}
               className="border p-4 w-full text-left hover:bg-gray-50 rounded"
-              onClick={() => setSelectedApp(app.key)}
+              onClick={() => handleAppSelect(app.key)}
             >
               {app.name}
             </button>
@@ -47,6 +60,9 @@ export const ActionNodeDetail = ({ node }: NodeDetailProps) => {
           >
             ← Back
           </button>
+          {selectedAction && (
+            <div className="mb-2 text-sm">Current Action: {selectedAction.title}</div>
+          )}
           <ActionSelector actions={mappedActions} onSelect={handleActionSelect} />
         </>
       )}
