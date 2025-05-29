@@ -13,7 +13,11 @@ export const ActionNodeDetail = ({ node }: NodeDetailProps) => {
   const { actions } = useActions(selectedApp ?? undefined);
 
   const handleActionSelect = (action: Action) => {
-    setNodeData(node.id, { actionType: action.id, title: action.title });
+    setNodeData(node.id, {
+      appKey: selectedApp ?? undefined,
+      actionType: action.id,
+      title: action.title,
+    });
   };
 
   const mappedActions = (actions || []).map((a: any) => ({
