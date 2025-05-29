@@ -33,6 +33,11 @@ export type WorkflowNodeData = {
   listingId?: string;
   actionId?: string;
   actionType?: string;
+  /**
+   * Key of the application the action belongs to. This is set when an
+   * action is chosen in the side panel and displayed within the node.
+   */
+  appKey?: string;
 };
 
 export type WorkflowNodeProps = NodeProps<Node<WorkflowNodeData>> & {
