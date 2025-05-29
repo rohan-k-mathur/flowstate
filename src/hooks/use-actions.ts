@@ -8,20 +8,24 @@ export function useActions(appKey?: string) {
 
   useEffect(() => {
     if (!appKey) return;
-    setIsLoading(true);
-    fetch(`/api/apps/${appKey}/actions`)
-      .then((res) => {
+
+    const fetchActions = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const res = await fetch(`/api/apps/${appKey}/actions`);
         if (!res.ok) throw new Error('Failed to fetch actions');
-        return res.json();
-      })
-      .then((data) => {
-        setActions(data);
+        const json = await res.json();
+        setActions(json.data);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
         setIsLoading(false);
-      })
-      .catch((err) => {
-        setError(err);
-        setIsLoading(false);
-      });
+      }
+    };
+
+    fetchActions();
   }, [appKey]);
 
   return { actions, isLoading, error };
