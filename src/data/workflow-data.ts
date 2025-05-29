@@ -43,7 +43,7 @@ export const initialNodes = [
 
 
 export const initialNodes: AppNode[] = [
-  /* createNodeFromRegistry({
+  createNodeFromRegistry({
     type: 'trigger-node',
     id: 'marketplace-trigger',
     position: { x: 0, y: -200 },
@@ -78,7 +78,7 @@ export const initialNodes: AppNode[] = [
     id: 'end-workflow',
     position: { x: 0, y: 600 },
     data: { title: 'End Workflow' },
-  }), */
+  }),
 ];
 
 export const initialEdges = [
