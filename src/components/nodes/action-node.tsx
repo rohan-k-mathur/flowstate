@@ -67,6 +67,9 @@ export function ActionNode({ id, data, type }: WorkflowNodeProps) {
 
       <div className="mt-2 p-2 text-xs bg-white">
         <p>
+          App: <strong>{data.appKey || 'None'}</strong>
+        </p>
+        <p>
           Selected Action: <strong>{data.actionType || 'None'}</strong>
         </p>
 

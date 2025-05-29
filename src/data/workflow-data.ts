@@ -1,49 +1,10 @@
 import { AppEdge, createEdge } from '@/components/edges';
 import { AppNode, createNodeByType, createNodeFromRegistry } from '@/components/nodes';
 import { nodeRegistry } from '@/config/node-registry';
-/* 
-export const initialNodes = [
-  createNodeByType({
-    type: 'trigger-node',
-    id: 'marketplace-trigger',
-    position: { x: 0, y: -200 },
-    data: nodeRegistry['trigger-node'].dataDefaults,
-  }),
-  createNodeByType({
-    type: 'branch-node',
-    id: 'inventory-check',
-    position: { x: 0, y: 0 },
-    data: { title: 'Inventory < 20?' },
-  }),
-  createNodeByType({
-    type: 'action-node',
-    id: 'send-email',
-    position: { x: -200, y: 200 },
-    data: { title: 'Send Low Inventory Email', actionType: 'send-email' },
-  }),
-  createNodeByType({
-    type: 'action-node',
-    id: 'update-etsy',
-    position: { x: 200, y: 200 },
-    data: { title: 'Update Etsy Inventory', actionType: 'update-etsy' },
-  }),
-  createNodeByType({
-    type: 'transform-node',
-    id: 'wait-node',
-    position: { x: 0, y: 400 },
-    data: { title: 'Wait 1 Day' },
-  }),
-  createNodeByType({
-    type: 'output-node',
-    id: 'end-workflow',
-    position: { x: 0, y: 600 },
-    data: { title: 'End Workflow' },
-  }),
-]; */
 
 
 export const initialNodes: AppNode[] = [
-  /* createNodeFromRegistry({
+  createNodeFromRegistry({
     type: 'trigger-node',
     id: 'marketplace-trigger',
     position: { x: 0, y: -200 },
@@ -78,7 +39,7 @@ export const initialNodes: AppNode[] = [
     id: 'end-workflow',
     position: { x: 0, y: 600 },
     data: { title: 'End Workflow' },
-  }), */
+  }),
 ];
 
 export const initialEdges = [

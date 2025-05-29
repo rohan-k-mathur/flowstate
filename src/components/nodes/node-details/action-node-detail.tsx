@@ -1,51 +1,65 @@
 'use client';
 import React, { useState } from 'react';
-import { ActionSelector } from '@/components/action-selector'; // ensure correct path
-import { shopifyActions } from './actions/shopify-actions';
-import { logicalActions } from './actions/logical-actions';
-import { Button } from '@/components/ui/button';
+import { ActionSelector } from '@/components/action-selector';
 import { useAppStore } from '@/store';
+import { useApps } from '@/hooks/use-apps';
+import { useActions } from '@/hooks/use-actions';
 import type { NodeDetailProps, Action } from './types';
 
 export const ActionNodeDetail = ({ node }: NodeDetailProps) => {
-    const setNodeData = useAppStore((state) => state.setNodeData);
-    const [selectedType, setSelectedType] = useState<string | null>(null);
-  
-    const handleActionSelect = (action: Action) => {
-      setNodeData(node.id, { actionType: action.id, title: action.title });
-    };
-  
-    return (
-      <div className="p-4 space-y-4">
-        {!selectedType ? (
-          <>
-            <button
-              className="border p-4 w-full text-left hover:bg-gray-50 rounded"
-              onClick={() => setSelectedType('Shopify')}
-            >
-              Shopify Actions
-            </button>
-            <button
-              className="border p-4 w-full text-left hover:bg-gray-50 rounded"
-              onClick={() => setSelectedType('Logical')}
-            >
-              Logical Flow Actions
-            </button>
-          </>
-        ) : (
-          <>
-            <button
-              className="text-sm underline mb-2"
-              onClick={() => setSelectedType(null)}
-            >
-              ← Back
-            </button>
-            <ActionSelector
-              actions={selectedType === 'Shopify' ? shopifyActions : logicalActions}
-              onSelect={handleActionSelect}
-            />
-          </>
-        )}
-      </div>
-    );
+  const setNodeData = useAppStore((state) => state.setNodeData);
+  const { apps } = useApps();
+  const [selectedApp, setSelectedApp] = useState<string | null>(
+    (node.data as any).appKey ?? null
+  );
+  const { actions } = useActions(selectedApp ?? undefined);
+
+  const handleAppSelect = (key: string) => {
+    setSelectedApp(key);
+    setNodeData(node.id, { appKey: key, actionType: '' });
   };
+
+  const handleActionSelect = (action: Action) => {
+    setNodeData(node.id, {
+      appKey: selectedApp ?? undefined,
+      actionType: action.id,
+      title: action.title,
+    });
+  };
+
+  const mappedActions = (actions || []).map((a: any) => ({
+    id: a.key,
+    title: a.name,
+  }));
+
+  return (
+    <div className="p-4 space-y-4">
+      {!selectedApp ? (
+        <>
+          {apps?.map((app: any) => (
+            <button
+              key={app.key}
+              className="border p-4 w-full text-left hover:bg-gray-50 rounded"
+              onClick={() => handleAppSelect(app.key)}
+            >
+              {app.name}
+            </button>
+          ))}
+        </>
+      ) : (
+        <>
+          <button
+            className="text-sm underline mb-2"
+            onClick={() => {
+              setSelectedApp(null);
+              setNodeData(node.id, { appKey: undefined, actionType: '' });
+            }}
+          >
+            ← Back
+          </button>
+          <ActionSelector actions={mappedActions} onSelect={handleActionSelect} />
+        </>
+      )}
+    </div>
+  );
+};

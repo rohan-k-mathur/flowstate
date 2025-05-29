@@ -27,6 +27,7 @@ export type WorkflowNodeData = {
   status?: 'loading' | 'success' | 'error' | 'initial';
   sku?: string;
   quantity?: number;
+  appKey?: string;
   platform?: 'Shopify' | 'Etsy' | 'Amazon' | 'eBay';
   selectedTrigger?: string;
   ordersCount?: number;
