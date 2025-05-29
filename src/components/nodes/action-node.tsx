@@ -69,6 +69,9 @@ export function ActionNode({ id, data, type }: WorkflowNodeProps) {
         <p>
           Selected Action: <strong>{data.actionType || 'None'}</strong>
         </p>
+        <p className="mt-1">
+          Selected App: <strong>{data.appKey || 'None'}</strong>
+        </p>
 
         <Input
           placeholder="Listing ID"

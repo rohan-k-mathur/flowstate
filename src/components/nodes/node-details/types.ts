@@ -26,5 +26,9 @@ export type WorkflowNodeData = {
     actionType?: string;  // <-- add this if not already present
     listingId?: string;
     quantity?: number;
+    /**
+     * Key of the application selected for this action node.
+     */
+    appKey?: string;
   };
   
