@@ -34,10 +34,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-<<<<<<< HEAD
-node_modules/
-node_modules/
-=======
->>>>>>> 4f6461f848a74ce768491ac49ddfe559b5681d80
-node_modules/
-.DS_Store
