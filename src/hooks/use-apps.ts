@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { getAuthToken } from '@/lib/auth';
 
 export function useApps() {
   const [apps, setApps] = useState<any[] | null>(null);
@@ -11,7 +12,12 @@ export function useApps() {
       setIsLoading(true);
       setError(null);
       try {
-        const res = await fetch('/api/apps');
+        const headers: HeadersInit = {};
+        const token = getAuthToken();
+        if (token) {
+          headers['Authorization'] = token;
+        }
+        const res = await fetch('/api/apps', { headers });
         if (!res.ok) throw new Error('Failed to fetch apps');
         const json = await res.json();
         setApps(json.data);

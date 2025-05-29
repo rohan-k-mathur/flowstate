@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { getAuthToken } from '@/lib/auth';
 
 export function useActions(appKey?: string) {
   const [actions, setActions] = useState<any[] | null>(null);
@@ -14,7 +15,12 @@ export function useActions(appKey?: string) {
       setError(null);
 
       try {
-        const res = await fetch(`/api/apps/${appKey}/actions`);
+        const headers: HeadersInit = {};
+        const token = getAuthToken();
+        if (token) {
+          headers['Authorization'] = token;
+        }
+        const res = await fetch(`/api/apps/${appKey}/actions`, { headers });
         if (!res.ok) throw new Error('Failed to fetch actions');
         const json = await res.json();
         setActions(json.data);

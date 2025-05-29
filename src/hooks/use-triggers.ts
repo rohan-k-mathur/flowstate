@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { getAuthToken } from '@/lib/auth';
 
 export function useTriggers(appKey?: string) {
   const [triggers, setTriggers] = useState<any[] | null>(null);
@@ -14,7 +15,12 @@ export function useTriggers(appKey?: string) {
       setError(null);
 
       try {
-        const res = await fetch(`/api/apps/${appKey}/triggers`);
+        const headers: HeadersInit = {};
+        const token = getAuthToken();
+        if (token) {
+          headers['Authorization'] = token;
+        }
+        const res = await fetch(`/api/apps/${appKey}/triggers`, { headers });
         if (!res.ok) throw new Error('Failed to fetch triggers');
         const json = await res.json();
         setTriggers(json.data);
