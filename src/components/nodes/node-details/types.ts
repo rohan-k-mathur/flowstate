@@ -1,4 +1,4 @@
-import { AppNode } from '@/components/nodes';
+import type { AppNode } from '@/components/nodes';
 
 export type ActionType = 'shopify' | 'logical';
 
