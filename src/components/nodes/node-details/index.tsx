@@ -5,8 +5,9 @@ import { BranchNodeDetail } from './branch-node-detail';
 import { useShallow } from 'zustand/react/shallow';
 import { useAppStore } from '@/store';
 import { nodeRegistry } from '@/config/node-registry';
+import type { NodeDetailProps } from './types';
 
-type NodeDetailProps = {
+type LocalNodeDetailProps = {
   node: AppNode;
 };
 
@@ -25,10 +26,10 @@ export function NodeDetail({ node }: { node: AppNode }) {
         return null;
     }
   }
-  export const NodeDetailFromRegistry = ({ node }: { node: AppNode }) => {
-    const NodeDetailComponent = nodeRegistry[node.type]?.detailComponent;
-  
-    if (!NodeDetailComponent) return <div>No detail available</div>;
-  
-    return <NodeDetailComponent node={node} />;
-  };
+export const NodeDetailFromRegistry = ({ node, setNodeData }: NodeDetailProps) => {
+  const NodeDetailComponent = nodeRegistry[node.type]?.detailComponent;
+
+  if (!NodeDetailComponent) return <div>No detail available</div>;
+
+  return <NodeDetailComponent node={node} setNodeData={setNodeData} />;
+};
