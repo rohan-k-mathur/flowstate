@@ -3,17 +3,19 @@ import { NextRequest, NextResponse } from 'next/server';
 const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
 
 export async function GET(request: NextRequest) {
+  const token = request.headers.get('authorization');
   try {
     const url = `${backendUrl}/internal/api/v1/apps${request.nextUrl.search}`;
-    const res = await fetch(url);
-
-    if (!res.ok) {
-      throw new Error(await res.text());
+    const headers: HeadersInit = {};
+    if (token) {
+      headers['Authorization'] = token;
     }
+    const res = await fetch(url, { headers });
 
-    const apps = await res.json();
-
-    return NextResponse.json(apps);
+    return new NextResponse(res.body, {
+      status: res.status,
+      headers: res.headers,
+    });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
