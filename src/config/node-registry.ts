@@ -31,7 +31,7 @@ export const nodeRegistry: Record<NodeType, NodeRegistryItem> = {
   'trigger-node': {
     id: 'trigger-node',
     category: 'trigger',
-    title: 'Marketplace Trigger',
+    title: 'Trigger',
     icon: 'Plug',
     iconComponent: Plug,
     handles: [{ type: 'source', position: 'bottom', x: 130, y: 50, id: 'output' }],
@@ -41,19 +41,19 @@ export const nodeRegistry: Record<NodeType, NodeRegistryItem> = {
   'action-node': {
     id: 'action-node',
     category: 'action',
-    title: 'Action Node',
+    title: 'Action',
     icon: 'UploadCloud',
     iconComponent: UploadCloud,
     handles: [
 
     ],
     detailComponent: ActionNodeDetail,
-    dataDefaults: { actionType: '', title: 'Action Node' },
+    dataDefaults: { actionType: '', title: 'Action' },
   },
   'inventory-node': {
     id: 'inventory-node',
     category: 'action',
-    title: 'Inventory Update',
+    title: 'Update',
     icon: 'Box',
     iconComponent: Box,
     handles: [
@@ -66,7 +66,7 @@ export const nodeRegistry: Record<NodeType, NodeRegistryItem> = {
   'branch-node': {
     id: 'branch-node',
     category: 'logic',
-    title: 'Branch Condition',
+    title: 'Branch',
     icon: 'CheckCircle2',
     iconComponent: CheckCircle2,
     handles: [
@@ -81,7 +81,7 @@ export const nodeRegistry: Record<NodeType, NodeRegistryItem> = {
   'join-node': {
     id: 'join-node',
     category: 'logic',
-    title: 'Join Node',
+    title: 'Join',
     icon: 'Split',
     iconComponent: Split,
     handles: [
@@ -95,7 +95,7 @@ export const nodeRegistry: Record<NodeType, NodeRegistryItem> = {
   'transform-node': {
     id: 'transform-node',
     category: 'logic',
-    title: 'Transform Data',
+    title: 'Transform',
     icon: 'Spline',
     iconComponent: Spline,
     handles: [
@@ -107,7 +107,7 @@ export const nodeRegistry: Record<NodeType, NodeRegistryItem> = {
   'output-node': {
     id: 'output-node',
     category: 'logic',
-    title: 'End Workflow',
+    title: 'End',
     icon: 'CheckCheck',
     iconComponent: CheckCheck,
     handles: [{ id: 'input', type: 'target', position: 'top', x: 130, y: 0 }],
