@@ -1,6 +1,6 @@
 // src/config/node-registry.ts
 import React from 'react';
-import { LucideIcon, ShoppingCart, UploadCloud, Box, Plug, CheckCircle2, Mail, Clock, Flag, Spline, CheckCheck } from 'lucide-react';
+import { LucideIcon, ShoppingCart, UploadCloud, Box, Plug, CheckCircle2, Mail, Clock, Flag, Spline, CheckCheck, Split } from 'lucide-react';
 import { TriggerNodeDetail } from '@/components/nodes/node-details/trigger-node-detail';
 import { ActionNodeDetail } from '@/components/nodes/node-details/action-node-detail';
 import { InventoryNodeDetail } from '@/components/nodes/node-details/inventory-node-detail';
@@ -11,6 +11,7 @@ export type NodeType =
   | 'action-node'
   | 'inventory-node'
   | 'branch-node'
+  | 'join-node'
   | 'transform-node'
   | 'output-node'
   | 'ai-node';
@@ -74,6 +75,20 @@ export const nodeRegistry: Record<NodeType, NodeRegistryItem> = {
       { id: 'false', type: 'source', position: 'bottom', x: 235, y: 50 },
     ],
     detailComponent: BranchNodeDetail,
+    dataDefaults: {},
+  },
+
+  'join-node': {
+    id: 'join-node',
+    category: 'logic',
+    title: 'Join Node',
+    icon: 'Split',
+    iconComponent: Split,
+    handles: [
+      { id: 'true', type: 'target', position: 'top', x: 235, y: 0 },
+      { id: 'false', type: 'target', position: 'top', x: 25, y: 0 },
+      { type: 'source', position: 'bottom', x: 130, y: 50 },
+    ],
     dataDefaults: {},
   },
   
