@@ -28,7 +28,18 @@ To get started, follow these steps:
    bun install
    ```
 
-2. **Run the development server**:
+2. **Start the backend**:
+
+   ```bash
+   # Using Docker
+   cd automat
+   docker-compose up
+
+   # Or run the Node server directly
+   node packages/backend/src/server.js
+   ```
+
+3. **Run the development server**:
 
    ```bash
    npm run dev
@@ -40,7 +51,13 @@ To get started, follow these steps:
    bun dev
    ```
 
-3. Open your browser and navigate to `http://localhost:3000`.
+4. Open your browser and navigate to `http://localhost:3000`.
+
+The API routes use the `BACKEND_URL` environment variable to reach the backend. If you run the backend on a different host or port, create a `.env.local` file and set:
+
+```bash
+BACKEND_URL=http://localhost:3000
+```
 
 ## Tech Stack
 
