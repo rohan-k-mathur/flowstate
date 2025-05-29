@@ -8,20 +8,24 @@ export function useTriggers(appKey?: string) {
 
   useEffect(() => {
     if (!appKey) return;
-    setIsLoading(true);
-    fetch(`/api/apps/${appKey}/triggers`)
-      .then((res) => {
+
+    const fetchTriggers = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const res = await fetch(`/api/apps/${appKey}/triggers`);
         if (!res.ok) throw new Error('Failed to fetch triggers');
-        return res.json();
-      })
-      .then((data) => {
-        setTriggers(data);
+        const json = await res.json();
+        setTriggers(json.data);
+      } catch (err) {
+        setError(err as Error);
+      } finally {
         setIsLoading(false);
-      })
-      .catch((err) => {
-        setError(err);
-        setIsLoading(false);
-      });
+      }
+    };
+
+    fetchTriggers();
   }, [appKey]);
 
   return { triggers, isLoading, error };
