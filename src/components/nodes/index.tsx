@@ -104,7 +104,7 @@ const nodesConfig: Record<AppNodeType, NodeConfig> = {
   },
   'transform-node': {
     id: 'transform-node',
-    title: 'Transform Node',
+    title: 'Transform',
     handles: [
       {
         id: 'output', // explicitly added handle ID for the source
@@ -126,7 +126,7 @@ const nodesConfig: Record<AppNodeType, NodeConfig> = {
   
   'join-node': {
     id: 'join-node',
-    title: 'Join Node',
+    title: 'Join',
     status: 'initial',
     handles: [
       {
@@ -154,7 +154,7 @@ const nodesConfig: Record<AppNodeType, NodeConfig> = {
   },
   'branch-node': {
     id: 'branch-node',
-    title: 'Branch Node',
+    title: 'Branch',
     status: 'initial',
     handles: [
       {
@@ -183,7 +183,7 @@ const nodesConfig: Record<AppNodeType, NodeConfig> = {
   },
   'output-node': {
     id: 'output-node',
-    title: 'Output Node',
+    title: 'End',
     handles: [
       {
         id: 'input', // explicitly defined handle ID
@@ -198,7 +198,7 @@ const nodesConfig: Record<AppNodeType, NodeConfig> = {
   
   'trigger-node': {
     id: 'trigger-node',
-    title: 'Marketplace Order',
+    title: 'Trigger',
     status: 'initial',
     handles: [
       {
@@ -214,7 +214,7 @@ const nodesConfig: Record<AppNodeType, NodeConfig> = {
   
   'inventory-node': {
     id: 'inventory-node',
-    title: 'Inventory Update',
+    title: 'Update',
     handles: [
       {
         id: 'input',
@@ -236,7 +236,7 @@ const nodesConfig: Record<AppNodeType, NodeConfig> = {
   'action-node': {
     id: 'action-node',
     category: 'action',
-    title: 'Action Node',
+    title: 'Action',
     icon: 'square-play',
     iconComponent: SquarePlay,
     handles: [
@@ -245,7 +245,7 @@ const nodesConfig: Record<AppNodeType, NodeConfig> = {
     ],
     detailComponent: ActionNodeDetail,
     dataDefaults: {
-      title: 'Action Node',
+      title: 'Action',
       actionType: '',
     },
   },
