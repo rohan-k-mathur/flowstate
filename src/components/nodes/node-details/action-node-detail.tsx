@@ -1,6 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import { ActionSelector } from '@/components/action-selector';
 import { useAppStore } from '@/store';
 import { useApps } from '@/hooks/use-apps';
 import { useActions } from '@/hooks/use-actions';
@@ -19,17 +18,21 @@ export const ActionNodeDetail = ({ node }: NodeDetailProps) => {
       : null,
   );
 
-  const handleAppSelect = (appKey: string) => {
+  const handleAppSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const appKey = e.target.value;
     setSelectedApp(appKey);
-    setNodeData(node.id, { appKey });
+    setSelectedAction(null);
+    setNodeData(node.id, { appKey, actionType: undefined });
   };
 
-  const handleActionSelect = (action: Action) => {
+  const handleActionSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const actionKey = e.target.value;
+    const action = mappedActions.find((a) => a.id === actionKey) || null;
     setSelectedAction(action);
     setNodeData(node.id, {
       appKey: selectedApp ?? undefined,
-      actionType: action.id,
-      title: action.title,
+      actionType: actionKey,
+      title: action?.title,
     });
   };
 
@@ -39,32 +42,49 @@ export const ActionNodeDetail = ({ node }: NodeDetailProps) => {
   }));
 
   return (
-    <div className="p-4 space-y-4">
-      {!selectedApp ? (
-        <>
+    <div className="p-4 flex flex-col gap-4">
+      <div>
+        <label className="font-semibold mb-1 block" htmlFor="action-app">
+          Choose App
+        </label>
+        <select
+          id="action-app"
+          className="border rounded p-2 w-full"
+          value={selectedApp || ''}
+          onChange={handleAppSelect}
+        >
+          <option value="" disabled>
+            Select app
+          </option>
           {apps?.map((app: any) => (
-            <button
-              key={app.key}
-              className="border p-4 w-full text-left hover:bg-gray-50 rounded"
-              onClick={() => handleAppSelect(app.key)}
-            >
+            <option key={app.key} value={app.key}>
               {app.name}
-            </button>
+            </option>
           ))}
-        </>
-      ) : (
-        <>
-          <button
-            className="text-sm underline mb-2"
-            onClick={() => setSelectedApp(null)}
+        </select>
+      </div>
+
+      {selectedApp && (
+        <div>
+          <label className="font-semibold mb-1 block" htmlFor="action-select">
+            Choose Action
+          </label>
+          <select
+            id="action-select"
+            className="border rounded p-2 w-full"
+            value={selectedAction?.id || ''}
+            onChange={handleActionSelect}
           >
-            ← Back
-          </button>
-          {selectedAction && (
-            <div className="mb-2 text-sm">Current Action: {selectedAction.title}</div>
-          )}
-          <ActionSelector actions={mappedActions} onSelect={handleActionSelect} />
-        </>
+            <option value="" disabled>
+              Select action
+            </option>
+            {mappedActions.map((action) => (
+              <option key={action.id} value={action.id}>
+                {action.title}
+              </option>
+            ))}
+          </select>
+        </div>
       )}
     </div>
   );
