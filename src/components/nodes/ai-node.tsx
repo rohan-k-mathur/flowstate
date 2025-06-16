@@ -22,10 +22,12 @@ interface AINodeProps {
   const edges = useAppStore((state: AppStore) => state.edges, shallow);
   const setNodes = useAppStore((state: AppStore) => state.setNodes);
   const setEdges = useAppStore((state: AppStore) => state.setEdges);
+  const setNodeData = useAppStore((state) => state.setNodeData);
   
   
   const handleGenerate = async () => {
     setLoading(true);
+    setNodeData(id, { status: 'loading' });
 
     try {
       const response = await fetch('/api/deepseek', {
@@ -38,8 +40,9 @@ interface AINodeProps {
       //console.debug('Raw Response from Backend:', textResponse);
 
       if (!response.ok) {
-        throw new Error(`API error: ${response.status}`);
-
+        const errResp = await response.json().catch(() => ({}));
+        const message = errResp?.error?.message || `API error: ${response.status}`;
+        throw new Error(message);
       }
       
       const jsonResponse = await response.json();
@@ -81,8 +84,10 @@ interface AINodeProps {
 // Debug output for newly created nodes and edges
       console.debug('Nodes after setNodes:', formattedNodes);
       console.debug('Edges after setEdges:', formattedEdges);
-    } catch (err) {
+      setNodeData(id, { status: 'success' });
+    } catch (err: any) {
       console.error('Failed to generate AI workflow:', err);
+      setNodeData(id, { status: 'error', errorMessage: err.message });
     } finally {
       setLoading(false);
     }
