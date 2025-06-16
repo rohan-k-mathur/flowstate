@@ -1,7 +1,7 @@
 {
   "name": "@automatisch/docs",
   "version": "0.10.0",
-  "license": "See LICENSE file",
+  "license": "AGPL-3.0-only",
   "description": "The open source Zapier alternative. Build workflow automation without spending time and money.",
   "private": true,
   "type": "module",
