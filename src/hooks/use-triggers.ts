@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { getAuthToken } from '@/lib/auth';
+import { mockTriggers } from '@/data/mock-triggers';
 
 export function useTriggers(appKey?: string) {
   const [triggers, setTriggers] = useState<any[] | null>(null);
@@ -25,6 +26,7 @@ export function useTriggers(appKey?: string) {
         const json = await res.json();
         setTriggers(json.data);
       } catch (err) {
+        setTriggers(mockTriggers[appKey] || []);
         setError(err as Error);
       } finally {
         setIsLoading(false);
