@@ -1,5 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+export function parseDeepseekResponse(data: any) {
+  let deepseekContent = data.choices[0].message.content.trim();
+
+  if (deepseekContent.startsWith('```json')) {
+    deepseekContent = deepseekContent.slice(7).trim();
+    deepseekContent = deepseekContent.replace(/```$/, '').trim();
+  }
+
+  return JSON.parse(deepseekContent);
+}
+
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
 export async function POST(request: NextRequest) {
     const { prompt } = await request.json();
@@ -89,34 +100,21 @@ Provide ONLY the JSON response without markdown or code fences.
     });
   
     const data = await response.json();
-  
+
     console.debug('DeepSeek Raw API Response:', data);
-  
-    // Extract and clean markdown-wrapped JSON
+
     let jsonResponse;
     try {
-      let deepseekContent = data.choices[0].message.content.trim();
-  
-      // Remove markdown code fences (```json ... ```)
-      if (deepseekContent.startsWith("```json")) {
-        deepseekContent = deepseekContent.slice(7).trim(); // remove leading ```json
-        deepseekContent = deepseekContent.replace(/```$/, '').trim(); // remove trailing ```
-      }
-  
-      jsonResponse = JSON.parse(deepseekContent);
-    } catch (err) {
-      console.error("Error parsing JSON:", err, data);
-      return new Response(JSON.stringify({ error: 'Malformed JSON from Deepseek' }), {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      jsonResponse = parseDeepseekResponse(data);
+    } catch (err: any) {
+      console.error('Error parsing JSON:', err, data);
+      return NextResponse.json(
+        { error: { code: 'invalid_json', message: 'Malformed JSON from Deepseek' } },
+        { status: 500 }
+      );
     }
-  
+
     console.debug('Parsed JSON Response:', jsonResponse);
-  
-    return new Response(JSON.stringify(jsonResponse), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-  
+
+    return NextResponse.json(jsonResponse);
+}
