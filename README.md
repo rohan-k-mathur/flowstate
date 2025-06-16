@@ -57,7 +57,10 @@ The API routes use the `BACKEND_URL` environment variable to reach the backend. 
 
 ```bash
 BACKEND_URL=http://localhost:3000
+DEEPSEEK_API_KEY=your-deepseek-api-key
 ```
+
+The `DEEPSEEK_API_KEY` is required for the AI Workflow Generator node.
 
 ## Tech Stack
 
@@ -97,6 +100,14 @@ Here’s a comprehensive overview of the src folder structure and its contents:
 - **`store`**: This folder contains the Zustand store for managing application state. Key files include:
   - `layout.ts`: Handles the auto-layout functionality for the application.
   - `app-store.ts`: Manages the state of the workflow builder, including nodes, edges, layout, color mode, and potential connections. It also provides actions for manipulating these states and handling events like node dragging and connecting.
+
+## Usage
+
+### Using the AI Workflow Generator
+
+1. Drag the **AI Workflow Generator** node from the sidebar onto the canvas.
+2. Enter a prompt describing the workflow you want, e.g. "Send an email when an order is placed and update inventory." 
+3. Click **Generate Workflow** and the node will create the corresponding nodes and edges.
 
 ## Adding New React Flow Components
 
