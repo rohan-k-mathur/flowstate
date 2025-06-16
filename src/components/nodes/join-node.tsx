@@ -4,7 +4,7 @@ import { AppHandle } from './workflow-node/app-handle';
 
 export function JoinNode({ id, data }: WorkflowNodeProps) {
   return (
-    <WorkflowNode id={id} data={data}>
+    <WorkflowNode id={id} data={data} type="join-node">
       {nodesConfig['join-node'].handles.map((handle) => (
         <AppHandle
           key={`${handle.type}-${handle.id}`}

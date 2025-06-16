@@ -10,13 +10,15 @@ export async function POST(request: NextRequest) {
   const url = `https://openapi.etsy.com/v3/application/shops/${ETSY_SHOP_ID}/listings/${listing_id}/inventory`;
 
   try {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+      'x-api-key': ETSY_API_KEY ?? '',
+      Authorization: `Bearer ${ETSY_ACCESS_TOKEN}`,
+    };
+
     const response = await fetch(url, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ETSY_API_KEY,
-        Authorization: `Bearer ${ETSY_ACCESS_TOKEN}`,
-      },
+      headers,
       body: JSON.stringify({
         products: [{ offerings: [{ quantity }] }],
       }),

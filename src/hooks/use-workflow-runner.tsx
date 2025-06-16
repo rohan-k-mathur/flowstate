@@ -63,7 +63,7 @@ export function useWorkflowRunner() {
         }
   
       } catch (error: any) {
-        setNodeData(node.id, { status: 'error', errorMessage: error.message });
+        setNodeData(node.id, { status: 'error' });
         setLogMessages((prev) => [...prev, `${node.data.title} failed: ${error.message}`]);
 
       }

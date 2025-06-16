@@ -1,4 +1,4 @@
-import type { AppNode } from '@/components/nodes';
+import type { AppNode, WorkflowNodeData } from '@/components/nodes';
 import { useApps } from '@/hooks/use-apps';
 import { useTriggers } from '@/hooks/use-triggers';
 
@@ -9,15 +9,19 @@ export type NodeDetailProps = {
 
 export const TriggerNodeDetail = ({ node, setNodeData }: NodeDetailProps) => {
   const { apps } = useApps();
-  const platformKey = node.data.platform as string | undefined;
+  const platformKey = node.data.platform;
   const { triggers } = useTriggers(platformKey);
 
   const handlePlatformChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setNodeData(node.id, { platform: e.target.value });
+    setNodeData(node.id, {
+      platform: e.target.value as WorkflowNodeData['platform'],
+    });
   };
 
   const handleEventChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setNodeData(node.id, { event: e.target.value });
+    setNodeData(node.id, {
+      event: e.target.value as WorkflowNodeData['event'],
+    });
   };
 
   return (

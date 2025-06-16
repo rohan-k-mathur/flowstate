@@ -23,10 +23,10 @@ export function WorkflowControls() {
           <Route />
         </Button>
         <div className="p-4">
-      <Button onClick={runWorkflow} disabled={isRunning}>
+      <Button onClick={() => runWorkflow()} disabled={isRunning}>
         {isRunning ? 'Running...' : 'Run Workflow'}
       </Button>
-      <Button onClick={stopWorkflow} variant="destructive">
+      <Button onClick={() => stopWorkflow()} variant="destructive">
         Stop Workflow
       </Button>
       <div className="mt-2 text-sm">

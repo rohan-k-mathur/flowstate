@@ -3,7 +3,7 @@
 import { useState, useCallback, ComponentProps, useRef } from 'react';
 import { Command, GripVertical, Plus } from 'lucide-react';
 import { useReactFlow } from '@xyflow/react';
-import { nodeRegistry } from '@/config/node-registry';
+import { nodeRegistry, type NodeRegistryItem } from '@/config/node-registry';
 
 import {
   Sidebar,
@@ -20,7 +20,6 @@ import { SettingsDialog } from '@/components/settings-dialog';
 import nodesConfig, {
   AppNode,
   createNodeByType,
-  type NodeConfig,
 } from '@/components/nodes';
 import { cn } from '@/lib/utils';
 import { iconMapping } from '@/data/icon-mapping';
@@ -70,7 +69,7 @@ const selector = (state: AppStore) => ({
   resetPotentialConnection: state.resetPotentialConnection,
 });
 
-function DraggableItem(props: NodeConfig) {
+function DraggableItem(props: NodeRegistryItem) {
   const { screenToFlowPosition } = useReactFlow();
   const { addNode, checkForPotentialConnection, resetPotentialConnection } =
     useAppStore(useShallow(selector));

@@ -16,7 +16,8 @@ import { BaseNode } from '@/components/base-node';
 import { NodeStatusIndicator } from '@/components/node-status-indicator';
 import { useAppStore } from '@/store';
 import { useShallow } from 'zustand/react/shallow';
-import { AppNodeType } from '@/components/nodes';
+import { AppNodeType, type AppNode } from '@/components/nodes';
+import { Position } from '@xyflow/react';
 import type { AppStore } from '@/store/app-store';
 import { AppHandle } from './app-handle';
 import ResizeObserver from 'resize-observer-polyfill';
@@ -87,7 +88,7 @@ function WorkflowNode({ id, data, type, children, nodeRef }: WorkflowNodeProps) 
   );
 
   const onSelectNode = useCallback(
-    () => setSelectedNode({ id, type, data }),
+    () => setSelectedNode({ id, type, data } as unknown as AppNode),
     [id, type, data, setSelectedNode]
   );
 
@@ -118,13 +119,13 @@ function WorkflowNode({ id, data, type, children, nodeRef }: WorkflowNodeProps) 
 
       <AppHandle
         type="target"
-        position="top"
+        position={Position.Top}
         x={nodeWidth / 2}
         y={0}
       />
       <AppHandle
         type="source"
-        position="bottom"
+        position={Position.Bottom}
         x={nodeWidth / 2}
         y={nodeHeight}
       />
