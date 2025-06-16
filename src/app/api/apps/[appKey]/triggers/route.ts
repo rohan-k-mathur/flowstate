@@ -2,8 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
 
-export async function GET(request: NextRequest, context: { params: { appKey: string } }) {
-  const { appKey } = context.params;
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { appKey: string } }
+) {
+  const { appKey } = params;
   const token = request.headers.get('authorization');
   try {
     const url = `${backendUrl}/internal/api/v1/apps/${appKey}/triggers`;
