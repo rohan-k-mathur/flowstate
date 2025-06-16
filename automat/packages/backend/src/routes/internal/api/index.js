@@ -22,6 +22,7 @@ import adminUsersRouter from './v1/admin/users.ee.js';
 import installationUsersRouter from './v1/installation/users.js';
 import foldersRouter from './v1/folders.js';
 import formsRouter from './v1/forms.ee.js';
+import workflowsRouter from './v1/workflows.js';
 
 const router = Router();
 
@@ -33,6 +34,7 @@ router.use('/v1/apps', appsRouter);
 router.use('/v1/connections', connectionsRouter);
 router.use('/v1/flows', flowsRouter);
 router.use('/v1/steps', stepsRouter);
+router.use('/v1/workflows', workflowsRouter);
 router.use('/v1/executions', executionsRouter);
 router.use('/v1/saml-auth-providers', samlAuthProvidersRouter);
 router.use('/v1/admin/apps', adminAppsRouter);

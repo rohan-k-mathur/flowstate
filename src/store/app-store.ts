@@ -57,6 +57,7 @@ export type AppActions = {
   setNodeData: (nodeId: string, data: Partial<WorkflowNodeData>) => void;
   toggleDarkMode: () => void;
   toggleLayout: () => void;
+  saveWorkflow: () => Promise<void>;
   
   onNodesChange: OnNodesChange<AppNode>;
   setNodes: (nodes: AppNode[]) => void;
@@ -254,6 +255,16 @@ export const createAppStore = (initialState: AppState = defaultState) => {
         set((state) => ({
           layout: state.layout === 'fixed' ? 'free' : 'fixed',
         })),
+
+      saveWorkflow: async () => {
+        const nodes = get().nodes;
+        const edges = get().edges;
+        await fetch('/api/workflows', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nodes, edges }),
+        });
+      },
 
       checkForPotentialConnection: (position, options) => {
         const closest: {
