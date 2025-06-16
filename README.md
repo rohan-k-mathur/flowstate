@@ -28,6 +28,14 @@ To get started, follow these steps:
    bun install
    ```
 
+   Install the backend dependencies as well:
+
+   ```bash
+   cd automat/packages/backend
+   yarn install
+   cd ../../..
+   ```
+
 2. **Start the backend**:
 
    ```bash
