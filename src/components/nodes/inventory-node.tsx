@@ -16,7 +16,7 @@ export function InventoryNode({ id, data }: WorkflowNodeProps) {
 
   useEffect(() => {
     setSku(data.sku || '');
-    setQuantity(data.quantity || 0);
+    setQuantity(data.quantity?.toString() || '');
   }, [data.sku, data.quantity]);
 
   const handleSkuChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +34,7 @@ export function InventoryNode({ id, data }: WorkflowNodeProps) {
   };
 
   return (
-    <WorkflowNode id={id} data={data}>
+    <WorkflowNode id={id} data={data} type="inventory-node">
       {nodesConfig['inventory-node'].handles.map((handle) => (
         <AppHandle
           key={`${handle.type}-${handle.id}`}

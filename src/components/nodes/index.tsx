@@ -28,6 +28,7 @@ export type WorkflowNodeData = {
   sku?: string;
   quantity?: number;
   platform?: 'Shopify' | 'Etsy' | 'Amazon' | 'eBay';
+  event?: string;
   selectedTrigger?: string;
   ordersCount?: number;
   listingId?: string;
@@ -255,7 +256,7 @@ const nodesConfig: Record<AppNodeType, NodeConfig> = {
     title: 'AI Workflow Generator',
     icon: 'BrainCircuit',
     iconComponent: SquarePlay, // or appropriate icon
-    handles: [{ type: 'source', position: 'bottom', x: 130, y: 80 }],
+    handles: [{ type: 'source', position: Position.Bottom, x: 130, y: 80 }],
     dataDefaults: {},
   },
 };
@@ -288,13 +289,11 @@ export function createNodeByType({
 
   const newNode: AppNode = {
     id: id ?? nanoid(),
-    data: data ?? {
-      title: node.title,
-      status: node.status,
-      icon: node.icon,
-      type, // <-- explicitly add the type here
-
-    },
+      data: data ?? {
+        title: node.title,
+        status: node.status,
+        icon: node.icon,
+      },
     position: {
       x: position.x - NODE_SIZE.width * 0.5,
       y: position.y - NODE_SIZE.height * 0.5,

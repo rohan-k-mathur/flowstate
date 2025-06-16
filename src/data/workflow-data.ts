@@ -81,7 +81,7 @@ export const initialNodes: AppNode[] = [
   }),
 ];
 
-export const initialEdges = [
+export const initialEdges: AppEdge[] = [
   // createEdge('marketplace-trigger', 'inventory-check', 'output', 'input'),
   // createEdge('inventory-check', 'send-email', 'true', 'input'),
   // createEdge('inventory-check', 'update-etsy', 'false', 'input'),

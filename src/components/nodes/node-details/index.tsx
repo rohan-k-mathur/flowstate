@@ -27,7 +27,9 @@ export function NodeDetail({ node }: { node: AppNode }) {
     }
   }
 export const NodeDetailFromRegistry = ({ node, setNodeData }: NodeDetailProps) => {
-  const NodeDetailComponent = nodeRegistry[node.type]?.detailComponent;
+  const NodeDetailComponent = node.type
+    ? nodeRegistry[node.type as keyof typeof nodeRegistry]?.detailComponent
+    : undefined;
 
   if (!NodeDetailComponent) return <div>No detail available</div>;
 

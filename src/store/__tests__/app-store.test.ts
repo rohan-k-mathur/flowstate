@@ -1,11 +1,13 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 
 vi.mock('../layout', () => ({
-  layoutGraph: vi.fn(async (nodes) => nodes.map(n => ({
-    ...n,
-    position: { x: 100, y: 100 },
-    style: { ...n.style, opacity: 1 }
-  })))
+  layoutGraph: vi.fn(async (nodes: any[]) =>
+    nodes.map((n: any) => ({
+      ...n,
+      position: { x: 100, y: 100 },
+      style: { ...n.style, opacity: 1 }
+    }))
+  )
 }))
 
 vi.mock('@/app/actions/cookies', () => ({
@@ -85,7 +87,7 @@ describe('addNodeInBetween', () => {
 
     const nodes = store.getState().nodes
     expect(nodes).toHaveLength(3)
-    const newNode = nodes.find(n => n.id !== 'A' && n.id !== 'B')!
+    const newNode = nodes.find((n: any) => n.id !== 'A' && n.id !== 'B')!
 
     const edges = store.getState().edges
     expect(edges).toContainEqual(createEdge('A', newNode.id, 'output', 'input'))

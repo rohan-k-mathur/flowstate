@@ -5,21 +5,20 @@ import WorkflowNode from './workflow-node';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useAppStore } from '@/store';
-import { shallow } from 'zustand/shallow';
 import { AppStore } from '@/store/app-store';
+import type { AppNodeType, WorkflowNodeData } from './index';
 
 interface AINodeProps {
-    id: string;
-    data: any;
-    type: string;
-  }
+  id: string;
+  data: WorkflowNodeData;
+  type: AppNodeType;
+}
 
-  export default function AINode({ id, data, type }: AINodeProps) {
-    const [prompt, setPrompt] = useState('');
+export default function AINode({ id, data, type }: AINodeProps) {
+  const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
-  // Explicitly typed Zustand selector to resolve "unknown" errors
-  const nodes = useAppStore((state: AppStore) => state.nodes, shallow);
-  const edges = useAppStore((state: AppStore) => state.edges, shallow);
+  const nodes = useAppStore((state: AppStore) => state.nodes);
+  const edges = useAppStore((state: AppStore) => state.edges);
   const setNodes = useAppStore((state: AppStore) => state.setNodes);
   const setEdges = useAppStore((state: AppStore) => state.setEdges);
   

@@ -4,7 +4,7 @@ import { AppHandle } from './workflow-node/app-handle';
 
 export function OutputNode({ id, data }: WorkflowNodeProps) {
   return (
-    <WorkflowNode id={id} data={data}>
+    <WorkflowNode id={id} data={data} type="output-node">
       {nodesConfig['output-node'].handles.map((handle) => (
         <AppHandle
           key={`${handle.type}-${handle.id}`}
