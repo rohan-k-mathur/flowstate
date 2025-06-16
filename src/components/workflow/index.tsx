@@ -42,8 +42,6 @@ export default function Workflow() {
     }))
   );
 
-  console.debug('Nodes passed into ReactFlow:', nodes);
-  console.debug('Edges passed into ReactFlow:', edges);
   const { onDragOver, onDrop } = useDragAndDrop();
   const runLayout = useLayout(true);
 
