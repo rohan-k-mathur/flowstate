@@ -89,3 +89,4 @@ export const initialEdges: AppEdge[] = [
   // createEdge('update-etsy', 'wait-node', 'output', 'input'),
   // createEdge('wait-node', 'end-workflow', 'output', 'input'),
 ];
+
