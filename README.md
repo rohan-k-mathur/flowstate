@@ -46,6 +46,7 @@ To get started, follow these steps:
    # Or run the Node server directly
    node packages/backend/src/server.js
    ```
+  Running `node packages/backend/src/server.js` requires PostgreSQL and Redis to be running and properly configured. `docker-compose up` starts these services automatically.
 
 3. **Run the development server**:
 
