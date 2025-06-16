@@ -19,4 +19,3 @@ export const marketplaceTriggers = {
       // Add eBay triggers
     ],
   };
-  
