@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getAuthToken } from '@/lib/auth';
+import { mockActionFields } from '@/data/mock-action-fields';
 
 export interface ActionFieldOption {
   label: string;
@@ -13,6 +14,10 @@ export interface ActionField {
   required?: boolean;
   description?: string;
   options?: ActionFieldOption[];
+  /**
+   * Nested fields for `dynamic` field types.
+   */
+  fields?: ActionField[];
 }
 
 export function useActionFields(appKey?: string, actionKey?: string) {
@@ -35,8 +40,8 @@ export function useActionFields(appKey?: string, actionKey?: string) {
         const json = await res.json();
         setFields(json.data);
       } catch (err) {
+        setFields(mockActionFields[appKey]?.[actionKey] || null);
         setError(err as Error);
-        setFields(null);
       } finally {
         setIsLoading(false);
       }
