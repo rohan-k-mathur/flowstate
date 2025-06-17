@@ -13,6 +13,10 @@ export interface ActionField {
   required?: boolean;
   description?: string;
   options?: ActionFieldOption[];
+  /**
+   * Nested fields for `dynamic` field types.
+   */
+  fields?: ActionField[];
 }
 
 export function useActionFields(appKey?: string, actionKey?: string) {
