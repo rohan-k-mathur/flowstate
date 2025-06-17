@@ -13,9 +13,11 @@ import {
     useNodeId,
     XYPosition,
   } from '@xyflow/react';
+import { useActionFields } from '@/hooks/use-action-fields';
 export function ActionNode({ id, data, type }: WorkflowNodeProps) {
 
   const nodeRef = useRef<HTMLDivElement>(null);
+  const { fields } = useActionFields(data.appKey, data.actionType);
 
   return (
     <WorkflowNode id={id} data={data} type={type} nodeRef={nodeRef}>
@@ -35,7 +37,14 @@ export function ActionNode({ id, data, type }: WorkflowNodeProps) {
         <p className="mt-1">
           Selected App: <strong>{data.appKey || 'None'}</strong>
         </p>
-
+        {fields?.map((f) => {
+          const val = (data as any)[f.key];
+          return val ? (
+            <p key={f.key} className="mt-1">
+              {f.label}: <strong>{String(val)}</strong>
+            </p>
+          ) : null;
+        })}
       </div>
 
       {/* <AppHandle
