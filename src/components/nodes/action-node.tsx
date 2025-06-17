@@ -44,11 +44,23 @@ export function ActionNode({ id, data, type }: WorkflowNodeProps) {
         )}
         {fields?.map((f) => {
           const val = (data as any)[f.key];
-          return val ? (
+          if (!val) return null;
+          if (f.type === 'dynamic' && Array.isArray(val)) {
+            return (
+              <p key={f.key} className="mt-1">
+                {f.label}: <strong>{val.map((v: any) => Object.values(v).join(', ')).join('; ')}</strong>
+              </p>
+            );
+          }
+          let displayVal = String(val);
+          if (f.type === 'textarea') {
+            displayVal = displayVal.length > 30 ? displayVal.slice(0, 30) + '…' : displayVal;
+          }
+          return (
             <p key={f.key} className="mt-1">
-              {f.label}: <strong>{String(val)}</strong>
+              {f.label}: <strong>{displayVal}</strong>
             </p>
-          ) : null;
+          );
         })}
       </div>
 

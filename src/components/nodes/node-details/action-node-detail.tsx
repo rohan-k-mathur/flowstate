@@ -150,6 +150,71 @@ export const ActionNodeDetail = ({ node, setNodeData }: NodeDetailProps) => {
                     </option>
                   ))}
                 </select>
+              ) : field.type === 'textarea' ? (
+                <textarea
+                  id={field.key}
+                  className="border rounded p-2 w-full h-32"
+                  value={(node.data as any)[field.key] || ''}
+                  onChange={(e) =>
+                    setNodeData(node.id, { [field.key]: e.target.value })
+                  }
+                />
+              ) : field.type === 'dynamic' && field.fields ? (
+                <div className="flex flex-col gap-2">
+                  {((node.data as any)[field.key] || []).map(
+                    (entry: Record<string, string>, idx: number) => (
+                      <div key={idx} className="flex items-center gap-2">
+                        {field.fields!.map((sub) => (
+                          <input
+                            key={sub.key}
+                            id={`${field.key}-${idx}-${sub.key}`}
+                            className="border rounded p-2 w-full"
+                            value={entry[sub.key] || ''}
+                            onChange={(e) => {
+                              const arr = [
+                                ...((node.data as any)[field.key] || []),
+                              ];
+                              arr[idx] = {
+                                ...arr[idx],
+                                [sub.key]: e.target.value,
+                              };
+                              setNodeData(node.id, { [field.key]: arr });
+                            }}
+                          />
+                        ))}
+                        <button
+                          type="button"
+                          className="text-xs px-2 py-1 border rounded"
+                          onClick={() => {
+                            const arr = [
+                              ...((node.data as any)[field.key] || []),
+                            ];
+                            arr.splice(idx, 1);
+                            setNodeData(node.id, { [field.key]: arr });
+                          }}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ),
+                  )}
+                  <button
+                    type="button"
+                    className="text-xs px-2 py-1 border rounded self-start"
+                    onClick={() => {
+                      const arr = [
+                        ...((node.data as any)[field.key] || []),
+                        field.fields!.reduce(
+                          (acc, cur) => ({ ...acc, [cur.key]: '' }),
+                          {},
+                        ),
+                      ];
+                      setNodeData(node.id, { [field.key]: arr });
+                    }}
+                  >
+                    Add {field.label}
+                  </button>
+                </div>
               ) : (
                 <input
                   id={field.key}
