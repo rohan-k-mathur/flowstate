@@ -6,7 +6,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { appKey: string } }
 ) {
-  const { appKey } = await params;
+  const { appKey } = params;
   const token = request.headers.get('authorization');
   try {
     const url = `${backendUrl}/internal/api/v1/apps/${appKey}/connections`;
