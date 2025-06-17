@@ -69,7 +69,14 @@ BACKEND_URL=http://localhost:3000
 DEEPSEEK_API_KEY=your-deepseek-api-key
 ```
 
+
 The `DEEPSEEK_API_KEY` is required for the AI Workflow Generator node.
+
+## API Routes
+
+These routes proxy requests to the backend using the `BACKEND_URL` value:
+
+- `GET /api/apps/[appKey]/connections` – list connections for a given app.
 
 ## Tech Stack
 
