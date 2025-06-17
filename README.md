@@ -103,6 +103,7 @@ Here’s a comprehensive overview of the src folder structure and its contents:
 - **`components`**: This is where all the components live.
 
   - `ui`: Shadcn components are stored under this folder.
+  - `ui/side-panel.tsx`: Renders the node details side panel. For action nodes this lets you pick a connection from your available accounts.
   - All other custom components (including nodes, edges, and other UI elements) are stored elsewhere. The `workflow` component is the core of the application, powering all the nodes and edges you see.
 
 - **`data`**: This folder contains data-related files, such as:
@@ -122,8 +123,9 @@ Here’s a comprehensive overview of the src folder structure and its contents:
 ### Using the AI Workflow Generator
 
 1. Drag the **AI Workflow Generator** node from the sidebar onto the canvas.
-2. Enter a prompt describing the workflow you want, e.g. "Send an email when an order is placed and update inventory." 
+2. Enter a prompt describing the workflow you want, e.g. "Send an email when an order is placed and update inventory."
 3. Click **Generate Workflow** and the node will create the corresponding nodes and edges.
+4. Select an action node to open the side panel and choose which connection it should use.
 
 ## Adding New React Flow Components
 
