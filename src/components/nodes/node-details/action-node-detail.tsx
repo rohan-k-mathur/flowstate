@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useApps } from '@/hooks/use-apps';
 import { useActions } from '@/hooks/use-actions';
 import { useActionFields } from '@/hooks/use-action-fields';
+import { useConnections } from '@/hooks/use-connections';
 import type { NodeDetailProps, Action } from './types';
 
 export const ActionNodeDetail = ({ node, setNodeData }: NodeDetailProps) => {
@@ -15,14 +16,19 @@ export const ActionNodeDetail = ({ node, setNodeData }: NodeDetailProps) => {
       ? { id: node.data.actionType, title: node.data.title ?? '' }
       : null,
   );
+  const [selectedConnection, setSelectedConnection] = useState<string | null>(
+    node.data.connectionId ?? null,
+  );
   const { actions } = useActions(selectedApp ?? undefined);
   const { fields } = useActionFields(selectedApp ?? undefined, selectedAction?.id);
+  const { connections } = useConnections(selectedApp ?? undefined);
 
   const handleAppSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const appKey = e.target.value;
     setSelectedApp(appKey);
     setSelectedAction(null);
-    setNodeData(node.id, { appKey, actionType: undefined });
+    setSelectedConnection(null);
+    setNodeData(node.id, { appKey, actionType: undefined, connectionId: undefined });
   };
 
   const handleActionSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -33,6 +39,15 @@ export const ActionNodeDetail = ({ node, setNodeData }: NodeDetailProps) => {
       appKey: selectedApp ?? undefined,
       actionType: actionKey,
       title: action?.title,
+    });
+  };
+
+  const handleConnectionSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const connectionKey = e.target.value;
+    setSelectedConnection(connectionKey);
+    setNodeData(node.id, {
+      appKey: selectedApp ?? undefined,
+      connectionId: connectionKey,
     });
   };
 
@@ -81,6 +96,29 @@ export const ActionNodeDetail = ({ node, setNodeData }: NodeDetailProps) => {
             {mappedActions.map((action) => (
               <option key={action.id} value={action.id}>
                 {action.title}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {selectedApp && connections && (
+        <div>
+          <label className="font-semibold mb-1 block" htmlFor="connection-select">
+            Connection
+          </label>
+          <select
+            id="connection-select"
+            className="border rounded p-2 w-full"
+            value={selectedConnection || ''}
+            onChange={handleConnectionSelect}
+          >
+            <option value="" disabled>
+              Select connection
+            </option>
+            {connections.map((connection) => (
+              <option key={connection.id} value={connection.id}>
+                {connection.name}
               </option>
             ))}
           </select>
