@@ -13,4 +13,14 @@ describe('setNodeData', () => {
     expect(updated?.data.appKey).toBe('gmail');
     expect(updated?.data.actionType).toBe('sendEmail');
   });
+
+  it('persists connection id', () => {
+    const node = createNodeByType({ type: 'action-node', id: 'B', position: { x: 0, y: 0 } });
+    const store = createAppStore({ ...defaultState, nodes: [node], edges: [] });
+
+    store.getState().setNodeData('B', { connectionId: '123' });
+
+    const updated = store.getState().nodes.find(n => n.id === 'B');
+    expect(updated?.data.connectionId).toBe('123');
+  });
 });
