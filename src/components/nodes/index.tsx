@@ -39,6 +39,10 @@ export type WorkflowNodeData = {
    * action is chosen in the side panel and displayed within the node.
    */
   appKey?: string;
+  /**
+   * ID of the connection to use for the selected action.
+   */
+  connectionId?: string;
 };
 
 export type WorkflowNodeProps = NodeProps<Node<WorkflowNodeData>> & {
@@ -248,6 +252,7 @@ const nodesConfig: Record<AppNodeType, NodeConfig> = {
     dataDefaults: {
       title: 'Action',
       actionType: '',
+      connectionId: '',
     },
   },
   'ai-node': {

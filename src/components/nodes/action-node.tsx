@@ -37,6 +37,11 @@ export function ActionNode({ id, data, type }: WorkflowNodeProps) {
         <p className="mt-1">
           Selected App: <strong>{data.appKey || 'None'}</strong>
         </p>
+        {data.connectionId && (
+          <p className="mt-1">
+            Connection: <strong>{data.connectionId}</strong>
+          </p>
+        )}
         {fields?.map((f) => {
           const val = (data as any)[f.key];
           return val ? (

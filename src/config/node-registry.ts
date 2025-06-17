@@ -48,7 +48,7 @@ export const nodeRegistry: Record<NodeType, NodeRegistryItem> = {
 
     ],
     detailComponent: ActionNodeDetail,
-    dataDefaults: { actionType: '', title: 'Action' },
+    dataDefaults: { actionType: '', title: 'Action', connectionId: '' },
   },
   'inventory-node': {
     id: 'inventory-node',
