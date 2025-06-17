@@ -1,22 +1,22 @@
 'use client';
 import React, { useState } from 'react';
-import { useAppStore } from '@/store';
 import { useApps } from '@/hooks/use-apps';
 import { useActions } from '@/hooks/use-actions';
+import { useActionFields } from '@/hooks/use-action-fields';
 import type { NodeDetailProps, Action } from './types';
 
-export const ActionNodeDetail = ({ node }: NodeDetailProps) => {
-  const setNodeData = useAppStore((state) => state.setNodeData);
+export const ActionNodeDetail = ({ node, setNodeData }: NodeDetailProps) => {
   const { apps } = useApps();
   const [selectedApp, setSelectedApp] = useState<string | null>(
     node.data.appKey ?? null,
   );
-  const { actions } = useActions(selectedApp ?? undefined);
   const [selectedAction, setSelectedAction] = useState<Action | null>(
     node.data.actionType
       ? { id: node.data.actionType, title: node.data.title ?? '' }
       : null,
   );
+  const { actions } = useActions(selectedApp ?? undefined);
+  const { fields } = useActionFields(selectedApp ?? undefined, selectedAction?.id);
 
   const handleAppSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const appKey = e.target.value;
@@ -84,6 +84,46 @@ export const ActionNodeDetail = ({ node }: NodeDetailProps) => {
               </option>
             ))}
           </select>
+        </div>
+      )}
+
+      {fields && fields.length > 0 && (
+        <div className="flex flex-col gap-4">
+          {fields.map((field) => (
+            <div key={field.key} className="flex flex-col gap-1">
+              <label className="font-semibold mb-1" htmlFor={field.key}>
+                {field.label}
+              </label>
+              {field.type === 'dropdown' && field.options ? (
+                <select
+                  id={field.key}
+                  className="border rounded p-2 w-full"
+                  value={(node.data as any)[field.key] || ''}
+                  onChange={(e) =>
+                    setNodeData(node.id, { [field.key]: e.target.value })
+                  }
+                >
+                  <option value="" disabled>
+                    Select {field.label.toLowerCase()}
+                  </option>
+                  {field.options.map((opt) => (
+                    <option key={opt.value} value={opt.value}>
+                      {opt.label}
+                    </option>
+                  ))}
+                </select>
+              ) : (
+                <input
+                  id={field.key}
+                  className="border rounded p-2 w-full"
+                  value={(node.data as any)[field.key] || ''}
+                  onChange={(e) =>
+                    setNodeData(node.id, { [field.key]: e.target.value })
+                  }
+                />
+              )}
+            </div>
+          ))}
         </div>
       )}
     </div>
