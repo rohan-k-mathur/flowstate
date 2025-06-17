@@ -39,6 +39,10 @@ export type WorkflowNodeData = {
    * action is chosen in the side panel and displayed within the node.
    */
   appKey?: string;
+  /**
+   * Identifier of the connection to use when executing the action.
+   */
+  connectionId?: string;
 };
 
 export type WorkflowNodeProps = NodeProps<Node<WorkflowNodeData>> & {
