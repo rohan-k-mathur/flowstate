@@ -2,8 +2,17 @@
 import { useEffect, useState } from 'react';
 import { getAuthToken } from '@/lib/auth';
 
-export function useConnections(appKey?: string) {
-  const [connections, setConnections] = useState<any[] | null>(null);
+export interface Connection {
+  id: string;
+  name: string;
+}
+
+export function useConnections(appKey?: string): {
+  connections: Connection[] | null;
+  isLoading: boolean;
+  error: Error | null;
+} {
+  const [connections, setConnections] = useState<Connection[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
