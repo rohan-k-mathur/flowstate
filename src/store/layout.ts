@@ -1,7 +1,7 @@
 import { type Edge } from '@xyflow/react';
 import ELK, { ElkNode, ElkPort } from 'elkjs/lib/elk.bundled.js';
 
-import nodesConfig, { type AppNode } from '@/components/nodes';
+import nodesConfig, { type AppNode, NODE_SIZE } from '@/components/nodes';
 
 const elk = new ELK();
 
@@ -79,9 +79,9 @@ export async function layoutGraph(nodes: AppNode[], edges: Edge[]) {
       const { targetPorts, sourcePorts } = getPorts(node);
       acc.push({
         id: node.id,
-        // TODO: we could use intial sizes here
-        width: node.width ?? node.measured?.width ?? 150,
-        height: node.height ?? node.measured?.height ?? 50,
+        // use measured dimensions when possible, otherwise fall back to defaults
+        width: node.width ?? node.measured?.width ?? NODE_SIZE.width,
+        height: node.height ?? node.measured?.height ?? NODE_SIZE.height,
         ports: [createSourcePort(node.id), ...targetPorts, ...sourcePorts],
         layoutOptions: {
           'org.eclipse.elk.portConstraints': 'FIXED_ORDER',
