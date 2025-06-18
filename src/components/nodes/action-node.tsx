@@ -42,22 +42,6 @@ export function ActionNode({ id, data, type }: WorkflowNodeProps) {
             Connection: <strong>{data.connectionId}</strong>
           </p>
         )}
-        {fields?.map((f) => {
-          const val = (data as any)[f.key];
-          if (!val) return null;
-          if (f.type === 'dynamic' && Array.isArray(val)) {
-            return (
-              <p key={f.key} className="mt-1">
-                {f.label}: <strong>{val.map((v: any) => Object.values(v).join(', ')).join('; ')}</strong>
-              </p>
-            );
-          }
-          return (
-            <p key={f.key} className="mt-1">
-              {f.label}: <strong>{String(val)}</strong>
-            </p>
-          );
-        })}
       </div>
 
       {/* <AppHandle
