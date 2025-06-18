@@ -50,7 +50,7 @@ To get started, follow these steps:
 
 ### Custom Workflow Backend
 
-For a lightweight example, this repo includes a minimal backend under `workflow-backend`. It exposes the same endpoints used by the frontend and stores workflows in memory.
+For a lightweight example, this repo includes a backend under `workflow-backend`. It now persists data in PostgreSQL and supports user authentication.
 
 ```bash
 cd workflow-backend
@@ -58,7 +58,7 @@ npm install
 npm run dev
 ```
 
-Set `BACKEND_URL=http://localhost:4000` in `.env.local` to proxy the Next.js API routes to this server.
+Create a `.env` file with `DATABASE_URL` and `JWT_SECRET` defined. Set `BACKEND_URL=http://localhost:4000` in `.env.local` to proxy the Next.js API routes to this server.
 
 3. **Run the development server**:
 
@@ -90,6 +90,8 @@ Create a `.env.local` file and define these variables:
 
 - `BACKEND_URL` – Base URL for the backend service.
 - `DEEPSEEK_API_KEY` – Required for the `/api/deepseek` route.
+- `DATABASE_URL` – PostgreSQL connection string for `workflow-backend`.
+- `JWT_SECRET` – Secret used to sign authentication tokens.
 
 ## API Routes
 
