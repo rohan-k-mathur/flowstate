@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { localActions } from '@/lib/local-actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -23,6 +24,7 @@ export async function GET(
       headers: res.headers,
     });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const fallback = localActions[appKey] || [];
+    return NextResponse.json({ data: fallback }, { status: 200 });
   }
 }
