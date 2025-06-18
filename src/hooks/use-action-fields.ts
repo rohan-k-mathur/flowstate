@@ -10,7 +10,7 @@ export interface ActionFieldOption {
 export interface ActionField {
   label: string;
   key: string;
-  type: string;
+  type: 'string' | 'dropdown' | 'dynamic' | 'textarea';
   required?: boolean;
   description?: string;
   options?: ActionFieldOption[];

@@ -206,6 +206,16 @@ export const ActionNodeDetail = ({ node, setNodeData }: NodeDetailProps) => {
                     Add {field.label}
                   </button>
                 </div>
+              ) : field.type === 'textarea' ? (
+                <textarea
+                  id={field.key}
+                  className="border rounded p-2 w-full"
+                  rows={5}
+                  value={(node.data as any)[field.key] || ''}
+                  onChange={(e) =>
+                    setNodeData(node.id, { [field.key]: e.target.value })
+                  }
+                />
               ) : (
                 <input
                   id={field.key}
