@@ -152,8 +152,16 @@ export const ActionNodeDetail = ({ node, setNodeData }: NodeDetailProps) => {
                 </select>
               ) : field.type === 'dynamic' && field.fields ? (
                 <div className="flex flex-col gap-2">
-                  {((node.data as any)[field.key] || []).map(
-                    (entry: Record<string, string>, idx: number) => (
+                  {(
+                    ((node.data as any)[field.key] || []).length > 0
+                      ? (node.data as any)[field.key]
+                      : [
+                          field.fields!.reduce(
+                            (acc, cur) => ({ ...acc, [cur.key]: '' }),
+                            {},
+                          ),
+                        ]
+                  ).map((entry: Record<string, string>, idx: number) => (
                       <div key={idx} className="flex items-center gap-2">
                         {field.fields!.map((sub) => (
                           <input
