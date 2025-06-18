@@ -44,9 +44,21 @@ To get started, follow these steps:
    docker-compose up
 
    # Or run the Node server directly
-   node packages/backend/src/server.js
-   ```
+  node packages/backend/src/server.js
+  ```
   Running `node packages/backend/src/server.js` requires PostgreSQL and Redis to be running and properly configured. `docker-compose up` starts these services automatically.
+
+### Custom Workflow Backend
+
+For a lightweight example, this repo includes a minimal backend under `workflow-backend`. It exposes the same endpoints used by the frontend and stores workflows in memory.
+
+```bash
+cd workflow-backend
+npm install
+npm run dev
+```
+
+Set `BACKEND_URL=http://localhost:4000` in `.env.local` to proxy the Next.js API routes to this server.
 
 3. **Run the development server**:
 
