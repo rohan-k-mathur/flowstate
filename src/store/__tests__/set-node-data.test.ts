@@ -23,4 +23,13 @@ describe('setNodeData', () => {
     const updated = store.getState().nodes.find(n => n.id === 'B');
     expect(updated?.data.connectionId).toBe('123');
   });
+
+  it('updates selected node', () => {
+    const node = createNodeByType({ type: 'action-node', id: 'C', position: { x: 0, y: 0 } });
+    const store = createAppStore({ ...defaultState, nodes: [node], edges: [], selectedNode: node });
+
+    store.getState().setNodeData('C', { appKey: 'slack' });
+
+    expect(store.getState().selectedNode?.data.appKey).toBe('slack');
+  });
 });
