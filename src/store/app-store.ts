@@ -143,13 +143,20 @@ export const createAppStore = (initialState: AppState = defaultState) => {
 
 
       setNodeData: (nodeId: string, newData: Partial<WorkflowNodeData>) => {
-        set((state) => ({
-          nodes: state.nodes.map((node) =>
+        set((state) => {
+          const nodes = state.nodes.map((node) =>
             node.id === nodeId
               ? { ...node, data: { ...node.data, ...newData } }
               : node
-          ),
-        }));
+          );
+
+          const selectedNode =
+            state.selectedNode?.id === nodeId
+              ? { ...state.selectedNode, data: { ...state.selectedNode.data, ...newData } }
+              : state.selectedNode;
+
+          return { nodes, selectedNode };
+        });
       },
       
 
