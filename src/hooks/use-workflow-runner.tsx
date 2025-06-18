@@ -74,23 +74,26 @@ export function useWorkflowRunner() {
   );
   
 
-  const executeWorkflowFromNode = async (
-    nodeId: string,
-    nodesMap: Map<string, AppNode>,
-    edgesMap: Map<string, AppEdge[]>
-  ) => {
-    if (!isRunning.current) return;
+  const executeWorkflowFromNode = useCallback(
+    async (
+      nodeId: string,
+      nodesMap: Map<string, AppNode>,
+      edgesMap: Map<string, AppEdge[]>
+    ) => {
+      if (!isRunning.current) return;
 
-    const node = nodesMap.get(nodeId);
-    if (!node) return;
+      const node = nodesMap.get(nodeId);
+      if (!node) return;
 
-    await processNode(node);
+      await processNode(node);
 
-    const outgoingEdges = edgesMap.get(nodeId) || [];
-    for (const edge of outgoingEdges) {
-      await executeWorkflowFromNode(edge.target, nodesMap, edgesMap);
-    }
-  };
+      const outgoingEdges = edgesMap.get(nodeId) || [];
+      for (const edge of outgoingEdges) {
+        await executeWorkflowFromNode(edge.target, nodesMap, edgesMap);
+      }
+    },
+    [processNode]
+  );
 
   const runWorkflow = useCallback(
     async (startNodeId?: string) => {
@@ -124,7 +127,7 @@ export function useWorkflowRunner() {
 
       isRunning.current = false;
     },
-    [getNodes, getEdges, processNode, resetNodeStatus]
+    [getNodes, getEdges, executeWorkflowFromNode, resetNodeStatus]
   );
 
   return {
