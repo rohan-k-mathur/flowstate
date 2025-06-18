@@ -1,23 +1,14 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import nodesConfig, { WorkflowNodeProps, WorkflowNodeData } from '.';
 import WorkflowNode from './workflow-node';
 import { AppHandle } from './workflow-node/app-handle';
 import { NODE_SIZE } from '.';
-import {
-    Position,
-    useConnection,
-    useInternalNode,
-    useNodeConnections,
-    useNodeId,
-    XYPosition,
-  } from '@xyflow/react';
-import { useActionFields } from '@/hooks/use-action-fields';
+import { Position } from '@xyflow/react';
 export function ActionNode({ id, data, type }: WorkflowNodeProps) {
 
   const nodeRef = useRef<HTMLDivElement>(null);
-  const { fields } = useActionFields(data.appKey, data.actionType);
 
   return (
     <WorkflowNode id={id} data={data} type={type} nodeRef={nodeRef}>
