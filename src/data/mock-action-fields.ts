@@ -33,6 +33,7 @@ export const mockActionFields: Record<string, Record<string, ActionField[]>> = {
           { label: 'BCC', key: 'bcc', type: 'string', required: false },
         ],
       },
+      { label: 'Body', key: 'emailBody', type: 'string', required: true },
       {
         label: 'From',
         key: 'from',
@@ -61,7 +62,6 @@ export const mockActionFields: Record<string, Record<string, ActionField[]>> = {
           { label: 'html', value: 'html' },
         ],
       },
-      { label: 'Body', key: 'emailBody', type: 'string', required: true },
       {
         label: 'Signature',
         key: 'signature',
