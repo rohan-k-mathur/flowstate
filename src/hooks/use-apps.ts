@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { getAuthToken } from '@/lib/auth';
-import { mockApps } from '@/data/mock-apps';
+import { localApps } from '@/lib/local-apps';
 
 export function useApps() {
   const [apps, setApps] = useState<any[] | null>(null);
@@ -23,7 +23,7 @@ export function useApps() {
         const json = await res.json();
         setApps(json.data);
       } catch (err) {
-        setApps(mockApps);
+        setApps(localApps);
         setError(err as Error);
       } finally {
         setIsLoading(false);
