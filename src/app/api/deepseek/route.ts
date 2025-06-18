@@ -2,7 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
 export async function POST(request: NextRequest) {
-    const { prompt } = await request.json();
+  if (!DEEPSEEK_API_KEY) {
+    return NextResponse.json(
+      { error: 'DEEPSEEK_API_KEY environment variable is not set' },
+      { status: 500 }
+    );
+  }
+
+  const { prompt } = await request.json();
   
     const response = await fetch('https://api.deepseek.com/chat/completions', {
       method: 'POST',
