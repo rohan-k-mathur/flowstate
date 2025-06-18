@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { localApps } from '@/lib/local-apps';
 
 const backendUrl = process.env.BACKEND_URL || 'http://localhost:3000';
 
@@ -11,12 +12,14 @@ export async function GET(request: NextRequest) {
       headers['Authorization'] = token;
     }
     const res = await fetch(url, { headers });
-
-    return new NextResponse(res.body, {
-      status: res.status,
-      headers: res.headers,
-    });
+    if (res.ok) {
+      return new NextResponse(res.body, {
+        status: res.status,
+        headers: res.headers,
+      });
+    }
+    throw new Error(`Backend error: ${res.status}`);
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ data: localApps }, { status: 200 });
   }
 }
