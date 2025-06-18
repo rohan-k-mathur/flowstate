@@ -52,18 +52,32 @@ const selector =
       state.potentialConnection?.id === `handle-${nodeId}-${type}-${id}`,
   });
 
-// TODO: we need to streamline how we calculate the yOffset
-const yOffset = (type: 'source' | 'target') => (type === 'source' ? 50 : -65);
+import { NODE_SIZE } from '@/components/nodes';
+
+const HANDLE_SPACING = 15;
+
+function getYOffset(position: Position, y: number) {
+  switch (position) {
+    case Position.Bottom:
+      // place the indicator below the handle based on its current position
+      return y;
+    case Position.Top:
+      // position indicator above the node with a small gap
+      return -NODE_SIZE.height - HANDLE_SPACING;
+    default:
+      return 0;
+  }
+}
 
 function getIndicatorPostion(
   nodePosition: XYPosition,
   x: number,
   y: number,
-  type: 'source' | 'target'
+  position: Position
 ) {
   return {
     x: nodePosition.x + x,
-    y: nodePosition.y + y + yOffset(type),
+    y: nodePosition.y + y + getYOffset(position, y),
   };
 }
 
@@ -119,12 +133,12 @@ export function AppHandle({
         type: nodeType,
         [type]: nodeId,
         [`${type}HandleId`]: id,
-        position: getIndicatorPostion(nodePosition, x, y, type),
+        position: getIndicatorPostion(nodePosition, x, y, handlePosition),
       });
 
       toggleDropdown();
     },
-    [nodeId, id, type, nodePosition, x, y, toggleDropdown, addNodeInBetween]
+    [nodeId, id, type, nodePosition, x, y, handlePosition, toggleDropdown, addNodeInBetween]
   );
 
   const displayAddButton =
@@ -136,7 +150,7 @@ export function AppHandle({
   useEffect(() => {
     if (displayAddButton) {
       connectionSites.set(connectionId, {
-        position: getIndicatorPostion(nodePosition, x, y, type),
+        position: getIndicatorPostion(nodePosition, x, y, handlePosition),
         [type]: {
           node: nodeId,
           handle: id,
@@ -157,6 +171,7 @@ export function AppHandle({
     type,
     x,
     y,
+    handlePosition,
     displayAddButton,
   ]);
   return (
