@@ -1,25 +1,27 @@
 'use client';
 
 import { useRef } from 'react';
-import nodesConfig, { WorkflowNodeProps, WorkflowNodeData } from '.';
+import { WorkflowNodeProps } from '.';
 import WorkflowNode from './workflow-node';
 import { AppHandle } from './workflow-node/app-handle';
-import { NODE_SIZE } from '.';
 import { Position } from '@xyflow/react';
+import { nodeRegistry } from '@/config/node-registry';
 export function ActionNode({ id, data, type }: WorkflowNodeProps) {
 
   const nodeRef = useRef<HTMLDivElement>(null);
 
   return (
     <WorkflowNode id={id} data={data} type={type} nodeRef={nodeRef}>
-      {/* Top Handle */}
-      {/* <AppHandle
-        id="in"
-        type="target"
-        position={Position.Top}
-        x={NODE_SIZE.width / 2}
-        y={0}
-      /> */}
+      {nodeRegistry['action-node'].handles.map((handle) => (
+        <AppHandle
+          key={`${handle.type}-${handle.id}`}
+          id={handle.id}
+          type={handle.type}
+          position={handle.position === 'top' ? Position.Top : Position.Bottom}
+          x={handle.x}
+          y={handle.y}
+        />
+      ))}
 
       <div className="mt-2 p-2 text-xs bg-white">
         <p>
@@ -34,14 +36,6 @@ export function ActionNode({ id, data, type }: WorkflowNodeProps) {
           </p>
         )}
       </div>
-
-      {/* <AppHandle
-        id="out"
-        type="source"
-        position="bottom"
-        x={NODE_SIZE.width / 2}
-        y={50}
-      /> */}
     </WorkflowNode>
   );
 }

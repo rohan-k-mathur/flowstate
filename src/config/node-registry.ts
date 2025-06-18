@@ -45,7 +45,8 @@ export const nodeRegistry: Record<NodeType, NodeRegistryItem> = {
     icon: 'UploadCloud',
     iconComponent: UploadCloud,
     handles: [
-
+      { id: 'in', type: 'target', position: 'top', x: 130, y: 0 },
+      { id: 'out', type: 'source', position: 'bottom', x: 130, y: 50 },
     ],
     detailComponent: ActionNodeDetail,
     dataDefaults: { actionType: '', title: 'Action', connectionId: '' },
