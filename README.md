@@ -84,6 +84,13 @@ DEEPSEEK_API_KEY=your-deepseek-api-key
 
 The `DEEPSEEK_API_KEY` is required for the AI Workflow Generator node.
 
+## Environment Variables
+
+Create a `.env.local` file and define these variables:
+
+- `BACKEND_URL` – Base URL for the backend service.
+- `DEEPSEEK_API_KEY` – Required for the `/api/deepseek` route.
+
 ## API Routes
 
 These routes proxy requests to the backend using the `BACKEND_URL` value:
