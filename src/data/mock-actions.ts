@@ -11,6 +11,10 @@ export const mockActions: Record<string, { key: string; name: string }[]> = {
     { key: 'create-issue', name: 'Create Issue' },
     { key: 'list-repos', name: 'List Repositories' },
   ],
+  airtable: [
+    { key: 'createRecord', name: 'Create record' },
+    { key: 'findRecord', name: 'Find record' },
+  ],
   notion: [
     { key: 'create-page', name: 'Create Page' },
     { key: 'update-database', name: 'Update Database' },
