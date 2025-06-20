@@ -12,8 +12,10 @@ export default function LandingLayout({ children }: { children: ReactNode }) {
         </Button>
       </header>
       <main className="flex flex-1 flex-col">{children}</main>
-      <footer className="px-6 py-4 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} Flowstate
+      <footer className="px-6 py-4 text-center text-sm text-muted-foreground space-y-1">
+        <div>© 2025 Flowstate Automation, Inc.</div>
+        <div>Privacy • Security • Terms</div>
+        <div>careers@flowstate.ai | support@flowstate.ai</div>
       </footer>
     </div>
   );
