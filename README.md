@@ -99,6 +99,27 @@ These routes proxy requests to the backend using the `BACKEND_URL` value:
 
 - `GET /api/apps/[appKey]/connections` – list connections for a given app.
 
+### Waitlist Route
+
+The project exposes a simple waitlist page at `/waitlist`. It posts form
+submissions to `POST /api/waitlist`, letting visitors register their email
+addresses for early access. The route can persist data either in a database or a
+local file.
+
+#### Storage configuration
+
+1. **Database** – set `WAITLIST_DATABASE_URL` in `.env.local` to a PostgreSQL
+   connection string. Run the backend migrations so the `waitlist` table is
+   created:
+
+   ```bash
+   cd automat/packages/backend
+   yarn db:migrate
+   ```
+
+2. **File** – alternatively set `WAITLIST_FILE` to a writable path. Submissions
+   will be appended to this JSON file.
+
 ## Tech Stack
 
 - **React Flow Components**: The project uses [React Flow Components](https://reactflow.dev/components) to build nodes. These components are designed to help you quickly get up to speed on projects.
