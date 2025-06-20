@@ -26,3 +26,26 @@ export async function GET(
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function POST(
+  request: NextRequest,
+  { params }: { params: { appKey: string } }
+) {
+  const { appKey } = params
+  const token = request.headers.get('authorization')
+  try {
+    const url = `${backendUrl}/internal/api/v1/apps/${appKey}/connections`
+    const body = await request.text()
+    const headers: HeadersInit = { 'Content-Type': 'application/json' }
+    if (token) {
+      headers['Authorization'] = token
+    }
+    const res = await fetch(url, { method: 'POST', headers, body })
+    return new NextResponse(res.body, {
+      status: res.status,
+      headers: res.headers,
+    })
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+}
