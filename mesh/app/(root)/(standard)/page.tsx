@@ -1,5 +1,6 @@
-import PostCard from "@/components/cards/PostCard";
-import { fetchRealtimePosts } from "@/lib/actions/realtimepost.actions";
+import PostThread from "@/components/forms/PostThread";
+import ThreadCard from "@/components/cards/ThreadCard";
+import { fetchPosts } from "@/lib/actions/thread.actions";
 import { getUserFromCookies } from "@/lib/serverutils";
 
 export const metadata = {
@@ -8,32 +9,32 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const result = await fetchRealtimePosts({
-    realtimeRoomId: "global",
-    postTypes: ["TEXT", "VIDEO", "IMAGE", "IMAGE_COMPUTE"],
-  });
+  const { posts } = await fetchPosts();
   const user = await getUserFromCookies();
 
   return (
-    <div >
+    <div>
+      {user && (
+        <div className="mb-8">
+          <PostThread userId={user.userId!} />
+        </div>
+      )}
       <section className="mt-[0rem] flex flex-col gap-12">
-        {result.length === 0 ? (
+        {posts.length === 0 ? (
           <p className="no-result">Nothing found</p>
         ) : (
           <>
-            {result.map((realtimePost) => (
-              <PostCard
-                key={realtimePost.id}
+            {posts.map((post) => (
+              <ThreadCard
+                key={post.id}
+                id={post.id}
                 currentUserId={user?.userId}
-                id={realtimePost.id}
-                content={
-                  realtimePost.content ? realtimePost.content : undefined
-                }
-                image_url={
-                  realtimePost.image_url ? realtimePost.image_url : undefined
-                }
-                author={realtimePost.author!}
-                createdAt={realtimePost.created_at.toDateString()}
+                parentId={post.parent_id}
+                content={post.content}
+                author={post.author}
+                createdAt={post.created_at.toDateString()}
+                comments={post.children}
+                likeCount={post.like_count}
               />
             ))}
           </>
