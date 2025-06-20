@@ -7,6 +7,7 @@ The Workflow Editor is a Next.js-based application designed to help you quickly 
 - [Getting Started](#getting-started)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
+- [Roadmap](#roadmap)
 - [What's Inside](#whats-inside)
 - [Usage](#usage)
 - [Working with Custom Nodes](#working-with-custom-nodes)
@@ -135,6 +136,10 @@ local file.
 - **Customizable Components**: Uses React Flow Components and the shadcn library to create highly-customizable nodes and edges.
 - **Dark Mode**: Toggles between light and dark themes, managed through the Zustand store.
 - **Runner Functionality**: Executes and monitors nodes sequentially with a workflow runner.
+
+## Roadmap
+
+The project roadmap is maintained in [ROADMAP.md](ROADMAP.md). Refer to it regularly to keep the global goals and aims in mind as you build new features and guide the agentic process.
 
 ## What's Inside?
 
