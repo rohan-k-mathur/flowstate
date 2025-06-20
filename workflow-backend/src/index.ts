@@ -29,6 +29,13 @@ async function init() {
       edges jsonb
     );
   `);
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS waitlist (
+      name text,
+      email text NOT NULL,
+      created_at timestamptz NOT NULL DEFAULT now()
+    );
+  `);
 }
 
 init().catch(err => console.error('DB init failed', err));
@@ -65,6 +72,16 @@ app.post('/internal/api/v1/login', async (req, res) => {
   if (!match) return res.status(401).json({ success: false });
   const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string);
   res.json({ success: true, token });
+});
+
+app.post('/internal/api/v1/waitlist', async (req, res) => {
+  const { name, email } = req.body;
+  if (!email) return res.status(400).json({ success: false });
+  await pool.query(
+    'INSERT INTO waitlist (name, email, created_at) VALUES ($1, $2, now())',
+    [name || null, email]
+  );
+  res.json({ success: true });
 });
 
 app.post('/internal/api/v1/workflows', auth, async (req, res) => {
