@@ -1,5 +1,6 @@
-The Ephemera Project
+MESH: a next-gen, experimental social platform. Mesh combines real-time multiplayer canvas-based rooms with nodes as posts, a wide array of different node types including text, images, video, livestreaming etc and multimedia interactions.
 
+- Check the Mesh_Roadmpa.md file for orientation.
 ## Getting Started
 
 ### Developing Localy
